@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/home/geek90/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.3.0/support-annotations-23.3.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="db7791d75a07fef9844d06236c1c59ba7bf6997c">
+        <dex dex="/home/geek90/AndroidStudioProjects/PopularMoviesApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.3.0_a4ff741d3e698632ae279b31e9ad22b094798c0c/classes.dex" />
+    </item>
+    <item
+        jar="/home/geek90/AndroidStudioProjects/PopularMoviesApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="1b8e03daaa43fb0a4cd57e378167c2fd70454c1e">
+        <dex dex="/home/geek90/AndroidStudioProjects/PopularMoviesApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-23.3.0_2bb85bd0e33fe8f7f0e4d7fe8855e09d4af2f65a/classes.dex" />
+    </item>
+    <item
+        jar="/home/geek90/AndroidStudioProjects/PopularMoviesApp/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="362f2c4b0b3378d53ec5b5ca9dae4fdd7d17a34d">
+        <dex dex="/home/geek90/AndroidStudioProjects/PopularMoviesApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_bf825fbac7965b6645db29501d4a78689ef7086f/classes.dex" />
+    </item>
+    <item
+        jar="/home/geek90/AndroidStudioProjects/PopularMoviesApp/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/libs/internal_impl-23.3.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="4da5a4d697d32497c6f85567a5112e62fdfd0676">
+        <dex dex="/home/geek90/AndroidStudioProjects/PopularMoviesApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.3.0_7eeaab454ffec20f38150d8380c64836ba0863ae/classes.dex" />
+    </item>
+    <item
+        jar="/home/geek90/AndroidStudioProjects/PopularMoviesApp/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="23be6993826b8fd88bbc8d14928bb3b8960d3d4e">
+        <dex dex="/home/geek90/AndroidStudioProjects/PopularMoviesApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-23.3.0_83ebac2cf51b9ac0dbd45c4e20e615e59b3d886c/classes.dex" />
+    </item>
+    <item
+        jar="/home/geek90/AndroidStudioProjects/PopularMoviesApp/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="17863adc7e0e2a5f4cc38cecadb7271f81681e56">
+        <dex dex="/home/geek90/AndroidStudioProjects/PopularMoviesApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_c0a2b918691288e536129600372035bd0cb5d0ab/classes.dex" />
+    </item>
+    <item
+        jar="/home/geek90/AndroidStudioProjects/PopularMoviesApp/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="8a034dd16c0dfd75fe86c52c2cd581592acc684a">
+        <dex dex="/home/geek90/AndroidStudioProjects/PopularMoviesApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.3.0_0d01eadbf59f8bed85f37fc0de1f05b2c52807de/classes.dex" />
+    </item>
+    <item
+        jar="/home/geek90/AndroidStudioProjects/PopularMoviesApp/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="a0b5d60246cd9d4f3f2443611b3b4c25265840b5">
+        <dex dex="/home/geek90/AndroidStudioProjects/PopularMoviesApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-23.3.0_c5adf93d8dba260108a655d7f3ee1e64779359c4/classes.dex" />
+    </item>
+    <item
+        jar="/home/geek90/AndroidStudioProjects/PopularMoviesApp/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="debf30ce0a7560396b6235edef77e447006454c2">
+        <dex dex="/home/geek90/AndroidStudioProjects/PopularMoviesApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-23.3.0_adb157816df666e2f314843745cb3a5e76daa795/classes.dex" />
+    </item>
+    <item
+        jar="/home/geek90/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/glide/3.7.0/9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4/glide-3.7.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4">
+        <dex dex="/home/geek90/AndroidStudioProjects/PopularMoviesApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/glide-3.7.0_b7e51238382955c8a7b6d5dbef69e951ca888927/classes.dex" />
+    </item>
+
+</items>
