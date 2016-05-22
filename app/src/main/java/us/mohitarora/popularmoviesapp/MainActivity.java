@@ -1,5 +1,6 @@
 package us.mohitarora.popularmoviesapp;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.GridView;
@@ -28,5 +29,20 @@ public class MainActivity extends AppCompatActivity {
         if (gridView != null) {
             gridView.setAdapter(movieAdapter);
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Uri.Builder builder = new Uri.Builder();
+
+        builder.scheme("https")
+                .authority("api.themoviedb.org")
+                .appendPath("3")
+                .appendPath("movie")
+                .appendPath("top_rated");
+
+        String popularMovies = builder.build().toString();
     }
 }
