@@ -1,28 +1,68 @@
 package us.mohitarora.popularmoviesapp;
 
 import android.content.Context;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.webkit.URLUtil;
+import android.graphics.Bitmap;
+import android.util.LruCache;
 
-import com.squareup.picasso.Picasso;
-
-import java.net.URL;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.Volley;
 
 /**
  * Created by admin on 5/21/2016.
+ *
  */
 
-public class NetworkRequest extends AsyncTask<URL,Void,Integer>{
+public class NetworkRequest {
+    private static NetworkRequest mInstance;
+    private RequestQueue mRequestQueue;
+    private ImageLoader mImageLoader;
+    private static Context mCtx;
 
-    Context context;
+    public NetworkRequest(Context context) {
+        this.mCtx = context;
 
-    @Override
-    protected Integer doInBackground(URL... params) {
+        mRequestQueue = getRequestQueue();
 
+        mImageLoader = new ImageLoader(mRequestQueue,
+                new ImageLoader.ImageCache() {
+                    private final LruCache<String, Bitmap>
+                            cache = new LruCache<String, Bitmap>(20);
 
+                    @Override
+                    public Bitmap getBitmap(String url) {
+                        return cache.get(url);
+                    }
 
-        return null;
+                    @Override
+                    public void putBitmap(String url, Bitmap bitmap) {
+                        cache.put(url, bitmap);
+                    }
+                });
     }
 
+    public static synchronized NetworkRequest getInstance(Context context) {
+        if (mInstance == null) {
+            mInstance = new NetworkRequest(context);
+        }
+        return mInstance;
+    }
+
+    public RequestQueue getRequestQueue() {
+        if (mRequestQueue == null) {
+            // getApplicationContext() is key, it keeps you from leaking the
+            // Activity or BroadcastReceiver if someone passes one in.
+            mRequestQueue = Volley.newRequestQueue(mCtx.getApplicationContext());
+        }
+        return mRequestQueue;
+    }
+
+    public <T> void addToRequestQueue(Request<T> req) {
+        getRequestQueue().add(req);
+    }
+
+    public ImageLoader getImageLoader() {
+        return mImageLoader;
+    }
 }
