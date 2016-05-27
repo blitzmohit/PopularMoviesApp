@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/sort"
+        android:icon="@drawable/vector_drawable_ic_sort_white___px"
+        android:title="@string/sort"
+        app:showAsAction="ifRoom">
+
+        <menu>
+            <item
+                android:id="@+id/menuSortNewest"
+                android:title="@string/sort_by_newest" />
+            <item
+                android:id="@+id/menuSortRating"
+                android:title="@string/sort_by_rating" />
+        </menu>
+    </item>
+
+</menu>

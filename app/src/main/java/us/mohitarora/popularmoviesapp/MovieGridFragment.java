@@ -6,9 +6,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -33,7 +37,10 @@ public class MovieGridFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         TAG = this.getClass().getSimpleName();
+
+        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -85,4 +92,35 @@ public class MovieGridFragment extends Fragment {
 
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main_menu, menu);
+
+        Menu subMenu = menu.findItem(R.id.sort).getSubMenu();
+
+        subMenu.add( Menu.NONE, R.id.menuSortFavorites, Menu.NONE, R.string.sort_by_favorites );
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch( item.getItemId() ){
+            case R.id.menuSortNewest:
+                Toast.makeText(getContext(), "SORT BY NEWEST", Toast.LENGTH_SHORT).show();
+
+                return true;
+            case R.id.menuSortRating:
+                Toast.makeText(getContext(), "SORT BY RATING", Toast.LENGTH_SHORT).show();
+
+                return true;
+
+            case R.id.menuSortFavorites:
+                Toast.makeText(getContext(), "SORT BY FAVORITES", Toast.LENGTH_SHORT).show();
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }
