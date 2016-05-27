@@ -1,15 +1,11 @@
 package us.mohitarora.popularmoviesapp;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.GridView;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    ArrayList<MovieItem> movieList = new ArrayList<>();
-
-    MovieItem interstellar = new MovieItem("something" , 0);
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -17,16 +13,16 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView( R.layout.activity_main );
 
-        for (int i=0; i< 20; i++){
-            movieList.add(interstellar);
-        }
+        FragmentManager fm = getSupportFragmentManager();
 
-        GridView gridView = (GridView) findViewById(R.id.movie_grid);
+        Fragment fragment = fm.findFragmentById( R.id.container );
 
-        MovieAdapter movieAdapter = new MovieAdapter(this, movieList);
+        if( fragment == null ){
+            fragment = new MovieGridFragment();
 
-        if (gridView != null) {
-            gridView.setAdapter(movieAdapter);
+            fm.beginTransaction()
+                    .add( R.id.container, fragment )
+                    .commit();
         }
     }
 }
