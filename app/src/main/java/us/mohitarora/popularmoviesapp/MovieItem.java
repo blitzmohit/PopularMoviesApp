@@ -9,55 +9,17 @@ import java.util.ArrayList;
 
 /**
  * Created by geek90 on 5/21/16.
- *
  */
 @Parcel
 public class MovieItem {
-    public String getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getOverview() {
-        return overview;
-    }
-
-    public String getPosterPath() {
-        return posterPath;
-    }
-
-    public String getPosterUri(){
-        return MovieDbUtil.BASE_IMAGE_URI + "w185" + posterPath;
-    }
-
-    public String getPosterUri( String width ){
-        return MovieDbUtil.BASE_IMAGE_URI + width + posterPath;
-    }
-
-    public String getVoteAverage() {
-        return String.valueOf(voteAverage);
-    }
-
     public String id;
-
     public String title;
-
     public String overview;
-
     public String posterPath;
-
     public Double voteAverage;
-
     public String releaseDate;
 
-    public String getYear() {
-        return releaseDate.split("-")[0];
-    }
-
-    MovieItem(){
+    MovieItem() {
     }
 
     public static ArrayList<MovieItem> parseMovieItems(JSONObject response) {
@@ -66,7 +28,7 @@ public class MovieItem {
 
             ArrayList<MovieItem> movieItems = new ArrayList<>(results.length());
 
-            for ( int i=0; i<results.length(); i++ ) {
+            for (int i = 0; i < results.length(); i++) {
                 JSONObject jsonMovieItem = results.getJSONObject(i);
 
                 MovieItem movieItem = new MovieItem();
@@ -91,5 +53,37 @@ public class MovieItem {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getOverview() {
+        return overview;
+    }
+
+    public String getPosterPath() {
+        return posterPath;
+    }
+
+    public String getPosterUri() {
+        return MovieDbUtil.BASE_IMAGE_URI + "w185" + posterPath;
+    }
+
+    public String getPosterUri(String width) {
+        return MovieDbUtil.BASE_IMAGE_URI + width + posterPath;
+    }
+
+    public String getVoteAverage() {
+        return String.valueOf(voteAverage) + "/10";
+    }
+
+    public String getYear() {
+        return releaseDate.split("-")[0];
     }
 }

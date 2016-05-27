@@ -1,6 +1,5 @@
 package us.mohitarora.popularmoviesapp;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,12 +7,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 
 import org.parceler.Parcels;
 
@@ -22,7 +19,6 @@ import butterknife.ButterKnife;
 
 /**
  * Created by geek90 on 5/27/16.
- *
  */
 public class DetailsViewFragment extends Fragment {
     MovieItem movie;
@@ -43,9 +39,14 @@ public class DetailsViewFragment extends Fragment {
     TextView title;
 
     @BindView(R.id.detail_poster)
-    ImageView poster;
+    NetworkImageView poster;
+
+    @BindView(R.id.detail_part)
+    View part;
 
     String TAG;
+
+    ImageLoader mImageLoader;
 
 
     @Override
@@ -53,6 +54,8 @@ public class DetailsViewFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         TAG = this.getClass().getSimpleName();
+
+        mImageLoader = NetworkRequest.getInstance(getActivity()).getImageLoader();
     }
 
     @Nullable
@@ -62,7 +65,7 @@ public class DetailsViewFragment extends Fragment {
 
         MovieItem movieItem = Parcels.unwrap(getArguments().getParcelable("movieitem"));
 
-        if( movieItem!=null ){
+        if (movieItem != null) {
             this.movie = movieItem;
         }
 
@@ -76,33 +79,43 @@ public class DetailsViewFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        if( movie != null ){
+        if (movie != null) {
 
-            title.setText( movie.getTitle() );
+            title.setText(movie.getTitle());
 
-            overview.setText( movie.getOverview() );
+            overview.setText(movie.getOverview());
 
-            year.setText( movie.getYear() );
+            year.setText(movie.getYear());
 
-            rating.setText( movie.getVoteAverage() );
+            rating.setText(movie.getVoteAverage());
 
-            ImageRequest request = new ImageRequest(movie.getPosterUri("w154"),
+/*            ImageRequest request = new ImageRequest(movie.getPosterUri("w154"),
                     new Response.Listener<Bitmap>() {
                         @Override
                         public void onResponse(Bitmap bitmap) {
+                            Log.d(TAG, "poster height is "+poster.getHeight());
+
+                            Log.d(TAG, "poster width is "+poster.getWidth());
+
+                            Log.d(TAG,"Height is "+bitmap.getHeight());
+
+                            Log.d(TAG,"Width is "+ bitmap.getWidth());
                             poster.setImageBitmap(bitmap);
+
                         }
-                    }, 0, 0, null,
+                    }, 0, 0, ImageView.ScaleType.CENTER, null,
                     new Response.ErrorListener() {
                         public void onErrorResponse(VolleyError error) {
 //                            poster.setImageResource(R.drawable.image_load_error);
                         }
                     });
 
-            NetworkRequest.getInstance(getContext()).addToRequestQueue(request);
+            NetworkRequest.getInstance(getContext()).addToRequestQueue(request);*/
 
-        }else{
-            Log.d(TAG,"movie is null");
+            poster.setImageUrl(movie.getPosterUri(), mImageLoader);
+
+        } else {
+            Log.d(TAG, "movie is null");
         }
     }
 }
