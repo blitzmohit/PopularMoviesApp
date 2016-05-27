@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -39,7 +40,7 @@ public class DetailsViewFragment extends Fragment {
     TextView title;
 
     @BindView(R.id.detail_poster)
-    NetworkImageView poster;
+    ImageView poster;
 
     @BindView(R.id.detail_part)
     View part;
@@ -112,7 +113,7 @@ public class DetailsViewFragment extends Fragment {
 
             NetworkRequest.getInstance(getContext()).addToRequestQueue(request);*/
 
-            poster.setImageUrl(movie.getPosterUri(), mImageLoader);
+//            poster.setImageUrl(movie.getPosterUri(), mImageLoader);
 
         } else {
             Log.d(TAG, "movie is null");
