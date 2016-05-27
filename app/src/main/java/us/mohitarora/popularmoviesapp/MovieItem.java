@@ -3,6 +3,7 @@ package us.mohitarora.popularmoviesapp;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.util.ArrayList;
 
@@ -10,6 +11,7 @@ import java.util.ArrayList;
  * Created by geek90 on 5/21/16.
  *
  */
+@Parcel
 public class MovieItem {
     public String getId() {
         return id;
@@ -31,19 +33,32 @@ public class MovieItem {
         return MovieDbUtil.BASE_IMAGE_URI + "w185" + posterPath;
     }
 
-    public Double getPopularity() {
-        return popularity;
+    public String getPosterUri( String width ){
+        return MovieDbUtil.BASE_IMAGE_URI + width + posterPath;
     }
 
-    String id;
+    public String getVoteAverage() {
+        return String.valueOf(voteAverage);
+    }
 
-    String title;
+    public String id;
 
-    String overview;
+    public String title;
 
-    String posterPath;
+    public String overview;
 
-    Double popularity;
+    public String posterPath;
+
+    public Double voteAverage;
+
+    public String releaseDate;
+
+    public String getYear() {
+        return releaseDate.split("-")[0];
+    }
+
+    MovieItem(){
+    }
 
     public static ArrayList<MovieItem> parseMovieItems(JSONObject response) {
         try {
@@ -60,11 +75,13 @@ public class MovieItem {
 
                 movieItem.id = jsonMovieItem.getString(MovieDbUtil.ID);
 
-                movieItem.popularity = jsonMovieItem.getDouble(MovieDbUtil.POPULARITY);
+                movieItem.voteAverage = jsonMovieItem.getDouble(MovieDbUtil.VOTE_AVERAGE);
 
                 movieItem.overview = jsonMovieItem.getString(MovieDbUtil.OVERVIEW);
 
                 movieItem.posterPath = jsonMovieItem.getString(MovieDbUtil.POSTER_PATH);
+
+                movieItem.releaseDate = jsonMovieItem.getString(MovieDbUtil.RELEASE_DATE);
 
                 movieItems.add(movieItem);
             }

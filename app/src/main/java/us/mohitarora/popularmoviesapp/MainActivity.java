@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
+import org.parceler.Parcels;
+
 public class MainActivity extends AppCompatActivity implements MovieAdapter.OnMovieSelectedListener {
 
     @Override
@@ -28,7 +30,14 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnMo
 
     @Override
     public void onPosterSelected(MovieItem movieItem) {
+        Bundle bundle = new Bundle();
+
+        bundle.putParcelable("movieitem", Parcels.wrap(movieItem));
+
         DetailsViewFragment nextFrag= new DetailsViewFragment();
+
+        nextFrag.setArguments(bundle);
+
         this.getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, nextFrag)
                 .addToBackStack(null)

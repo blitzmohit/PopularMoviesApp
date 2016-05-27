@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
@@ -14,6 +13,7 @@
             android:textColor="@android:color/white"
             android:text="Chappie"
             style="@style/TextAppearance.AppCompat"
+            android:id="@+id/detail_title"
             android:layout_gravity="center_vertical"
             android:textSize="54sp"
             android:layout_marginLeft="@dimen/detail_image_horizontal_margin"
@@ -23,81 +23,88 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/detail_image_horizontal_margin"
-        android:layout_marginEnd="@dimen/detail_image_horizontal_margin"
-        android:layout_marginLeft="@dimen/detail_image_horizontal_margin"
-        android:layout_marginStart="@dimen/detail_image_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginBottom="@dimen/activity_vertical_margin">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/jurrasic_park"/>
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="32dp">
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/detail_image_horizontal_margin"
+                android:layout_marginEnd="@dimen/detail_image_horizontal_margin"
+                android:layout_marginLeft="@dimen/detail_image_horizontal_margin"
+                android:layout_marginStart="@dimen/detail_image_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin">
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/jurrasic_park"
+                    android:id="@+id/detail_poster"/>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="32dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2015"
+                        android:layout_margin="4dp"
+                        android:textSize="30sp"
+                        android:id="@+id/detail_year"/>
+                    <TextView
+                        android:id="@+id/detail_runtime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:text="120min"
+                        android:textStyle="italic"
+                        android:textSize="24sp"
+                        />
+                    <TextView
+                        android:id="@+id/detail_rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:text="8.1/10"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/black"/>
+
+                    <TextView
+                        android:id="@+id/detail_mark_favorite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="MARK AS \nFAVORITE"
+                        android:minLines="2"
+                        android:layout_margin="4dp"
+                        android:background="@color/favoriteBox"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+            </LinearLayout>
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="2015"
-                android:layout_margin="4dp"
-                android:textSize="30sp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:text="120min"
-                android:textStyle="italic"
-                android:textSize="24sp"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_gravity="center_vertical|end"
+                android:gravity="start"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:textSize="20sp"
+                android:id="@+id/detail_overview"
+                android:text="A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground &quot;fight clubs&quot; forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion."
                 />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:text="8.1/10"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"/>
-            
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="MARK AS \nFAVORITE"
-                android:minLines="2"
-                android:layout_margin="4dp"
-                android:background="@color/favoriteBox"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp"
-                android:textSize="12sp"/>
         </LinearLayout>
-    </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_gravity="center_vertical|end"
-        android:gravity="start"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:textSize="20sp"
-        android:text="A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground &quot;fight clubs&quot; forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion."
-        />
-    </LinearLayout>
     </ScrollView>
 </LinearLayout>

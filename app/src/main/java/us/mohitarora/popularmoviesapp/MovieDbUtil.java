@@ -9,13 +9,13 @@ import android.net.Uri;
 
 class MovieDbUtil {
 
+    public static final String RELEASE_DATE = "release_date";
+
     public static String TOP_MOVIES = "top_rated";
 
     public static String POPULAR_MOVIES = "popular";
 
     public static String UPCOMING_MOVIES= "upcoming";
-
-
 
     public static String ID = "id";
 
@@ -25,7 +25,7 @@ class MovieDbUtil {
 
     public static String OVERVIEW = "overview";
 
-    public static String POPULARITY = "popularity";
+    public static String VOTE_AVERAGE = "vote_average";
 
     public static String BASE_IMAGE_URI = "http://image.tmdb.org/t/p/";
 
