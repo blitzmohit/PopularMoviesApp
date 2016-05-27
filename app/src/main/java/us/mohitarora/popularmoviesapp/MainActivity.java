@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MovieAdapter.OnMovieSelectedListener {
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -24,5 +24,14 @@ public class MainActivity extends AppCompatActivity {
                     .add( R.id.container, fragment )
                     .commit();
         }
+    }
+
+    @Override
+    public void onPosterSelected(MovieItem movieItem) {
+        DetailsViewFragment nextFrag= new DetailsViewFragment();
+        this.getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, nextFrag)
+                .addToBackStack(null)
+                .commit();
     }
 }

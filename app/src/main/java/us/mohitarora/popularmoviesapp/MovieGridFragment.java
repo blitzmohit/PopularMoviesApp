@@ -123,4 +123,8 @@ public class MovieGridFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    void test(){
+        Log.d(TAG, "hello");
+    }
 }
