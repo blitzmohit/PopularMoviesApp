@@ -9,27 +9,33 @@ import android.net.Uri;
 
 class MovieDbUtil {
 
-    public static final String RELEASE_DATE = "release_date";
+    static final String RELEASE_DATE = "release_date";
 
-    public static String TOP_MOVIES = "top_rated";
+    static final String TOP_RATED_MOVIES = "top_rated";
 
-    public static String POPULAR_MOVIES = "popular";
+    static final String POPULAR_MOVIES = "popular";
 
-    public static String UPCOMING_MOVIES= "upcoming";
+    static final String UPCOMING_MOVIES= "upcoming";
 
-    public static String ID = "id";
+    static final int POPULARITY_SORT = 1;
 
-    public static String TITLE = "title";
+    static final int RATING_SORT = 2;
 
-    public static String POSTER_PATH = "poster_path";
+    static final int FAVORITE_SORT = 3;
 
-    public static String OVERVIEW = "overview";
+    static final String ID = "id";
 
-    public static String VOTE_AVERAGE = "vote_average";
+    static final String TITLE = "title";
 
-    public static String BASE_IMAGE_URI = "http://image.tmdb.org/t/p/";
+    static final String POSTER_PATH = "poster_path";
 
-    public static Uri getNetworkUri( String requestType ){
+    static final String OVERVIEW = "overview";
+
+    static final String VOTE_AVERAGE = "vote_average";
+
+    static final String BASE_IMAGE_URI = "http://image.tmdb.org/t/p/";
+
+    static Uri getNetworkUri( String requestType ){
 
         Uri.Builder builder = new Uri.Builder();
 

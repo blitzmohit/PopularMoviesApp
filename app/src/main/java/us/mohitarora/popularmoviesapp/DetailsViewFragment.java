@@ -1,5 +1,6 @@
 package us.mohitarora.popularmoviesapp;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,8 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.ImageRequest;
 
 import org.parceler.Parcels;
 
@@ -22,32 +25,35 @@ import butterknife.ButterKnife;
  * Created by geek90 on 5/27/16.
  */
 public class DetailsViewFragment extends Fragment {
-    MovieItem movie;
+    private MovieItem movie;
 
     @BindView(R.id.detail_year)
+    private
     TextView year;
 
     @BindView(R.id.detail_rating)
+    private
     TextView rating;
 
     @BindView(R.id.detail_runtime)
     TextView runtime;
 
     @BindView(R.id.detail_overview)
+    private
     TextView overview;
 
     @BindView(R.id.detail_title)
+    private
     TextView title;
 
     @BindView(R.id.detail_poster)
+    private
     ImageView poster;
 
     @BindView(R.id.detail_part)
     View part;
 
-    String TAG;
-
-    ImageLoader mImageLoader;
+    private String TAG;
 
 
     @Override
@@ -56,7 +62,7 @@ public class DetailsViewFragment extends Fragment {
 
         TAG = this.getClass().getSimpleName();
 
-        mImageLoader = NetworkRequest.getInstance(getActivity()).getImageLoader();
+        ImageLoader mImageLoader = NetworkRequest.getInstance(getActivity()).getImageLoader();
     }
 
     @Nullable
@@ -64,7 +70,7 @@ public class DetailsViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.detail_view_fragment, container, false);
 
-        MovieItem movieItem = Parcels.unwrap(getArguments().getParcelable("movieitem"));
+        MovieItem movieItem = Parcels.unwrap(getArguments().getParcelable("movieItem"));
 
         if (movieItem != null) {
             this.movie = movieItem;
@@ -90,28 +96,21 @@ public class DetailsViewFragment extends Fragment {
 
             rating.setText(movie.getVoteAverage());
 
-/*            ImageRequest request = new ImageRequest(movie.getPosterUri("w154"),
+            ImageRequest request = new ImageRequest(movie.getPosterUri("w154"),
                     new Response.Listener<Bitmap>() {
                         @Override
                         public void onResponse(Bitmap bitmap) {
-                            Log.d(TAG, "poster height is "+poster.getHeight());
-
-                            Log.d(TAG, "poster width is "+poster.getWidth());
-
-                            Log.d(TAG,"Height is "+bitmap.getHeight());
-
-                            Log.d(TAG,"Width is "+ bitmap.getWidth());
                             poster.setImageBitmap(bitmap);
 
                         }
-                    }, 0, 0, ImageView.ScaleType.CENTER, null,
+                    }, 0, 0, ImageView.ScaleType.FIT_CENTER, null,
                     new Response.ErrorListener() {
                         public void onErrorResponse(VolleyError error) {
 //                            poster.setImageResource(R.drawable.image_load_error);
                         }
                     });
 
-            NetworkRequest.getInstance(getContext()).addToRequestQueue(request);*/
+            NetworkRequest.getInstance(getContext()).addToRequestQueue(request);
 
 //            poster.setImageUrl(movie.getPosterUri(), mImageLoader);
 

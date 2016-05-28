@@ -9,7 +9,7 @@ import com.android.volley.toolbox.ImageLoader.ImageCache;
  Example from https://developer.android.com/training/volley/request.html#request-image
  */
 
-public class LruBitmapCache extends LruCache<String, Bitmap>
+class LruBitmapCache extends LruCache<String, Bitmap>
         implements ImageCache {
 
     public LruBitmapCache(int maxSize) {

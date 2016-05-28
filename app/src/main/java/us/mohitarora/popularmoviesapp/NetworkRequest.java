@@ -18,8 +18,8 @@ public class NetworkRequest {
     private ImageLoader mImageLoader;
     private static Context mCtx;
 
-    public NetworkRequest(Context context) {
-        this.mCtx = context;
+    private NetworkRequest(Context context) {
+        mCtx = context;
 
         mRequestQueue = getRequestQueue();
 
@@ -34,7 +34,7 @@ public class NetworkRequest {
         return mInstance;
     }
 
-    public RequestQueue getRequestQueue() {
+    private RequestQueue getRequestQueue() {
         if (mRequestQueue == null) {
             // getApplicationContext() is key, it keeps you from leaking the
             // Activity or BroadcastReceiver if someone passes one in.

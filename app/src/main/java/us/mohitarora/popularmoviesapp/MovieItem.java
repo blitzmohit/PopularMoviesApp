@@ -11,15 +11,15 @@ import java.util.ArrayList;
  * Created by geek90 on 5/21/16.
  */
 @Parcel
-public class MovieItem {
-    public String id;
-    public String title;
-    public String overview;
-    public String posterPath;
-    public Double voteAverage;
-    public String releaseDate;
+class MovieItem {
+    private String id;
+    private String title;
+    private String overview;
+    private String posterPath;
+    private Double voteAverage;
+    private String releaseDate;
 
-    MovieItem() {
+    private MovieItem() {
     }
 
     public static ArrayList<MovieItem> parseMovieItems(JSONObject response) {
@@ -65,10 +65,6 @@ public class MovieItem {
 
     public String getOverview() {
         return overview;
-    }
-
-    public String getPosterPath() {
-        return posterPath;
     }
 
     public String getPosterUri() {

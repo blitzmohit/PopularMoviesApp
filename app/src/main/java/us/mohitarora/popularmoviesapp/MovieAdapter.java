@@ -1,8 +1,6 @@
 package us.mohitarora.popularmoviesapp;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +15,12 @@ import java.util.List;
  * Created by geek90 on 5/16/16.
  *
  */
-public class MovieAdapter extends ArrayAdapter<MovieItem>{
-    ImageLoader mImageLoader;
+class MovieAdapter extends ArrayAdapter<MovieItem>{
+    private ImageLoader mImageLoader;
 
     private OnMovieSelectedListener listener;
 
-    Context context;
+    private Context context;
 
 
     public MovieAdapter(Context context, List<MovieItem> objects) {
@@ -60,7 +58,7 @@ public class MovieAdapter extends ArrayAdapter<MovieItem>{
 
 
 
-    public interface OnMovieSelectedListener {
-        public void onPosterSelected(MovieItem movieItem);
+    interface OnMovieSelectedListener {
+        void onPosterSelected(MovieItem movieItem);
     }
 }

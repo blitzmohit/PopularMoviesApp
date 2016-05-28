@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnMo
     public void onPosterSelected(MovieItem movieItem) {
         Bundle bundle = new Bundle();
 
-        bundle.putParcelable("movieitem", Parcels.wrap(movieItem));
+        bundle.putParcelable("movieItem", Parcels.wrap(movieItem));
 
         DetailsViewFragment nextFrag= new DetailsViewFragment();
 

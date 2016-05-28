@@ -30,9 +30,44 @@ import java.util.ArrayList;
 
 public class MovieGridFragment extends Fragment {
     private static String TAG;
-    ArrayList<MovieItem> movieList;
 
-    GridView gridView;
+    private GridView gridView;
+
+    private MovieAdapter mMovieAdapter;
+
+    private int sortOrder = MovieDbUtil.POPULARITY_SORT; //default sort order is by popularity
+
+    private Response.ErrorListener jsonErrorListener = new Response.ErrorListener() {
+
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            Log.d("JSON","Response: error");
+
+            Log.d("JSON", error.getMessage());
+        }
+    };
+    private Response.Listener jsonResponseListener = new Response.Listener<JSONObject>() {
+
+        @Override
+        public void onResponse(JSONObject response) {
+            // Create Movie items from response.
+            ArrayList<MovieItem> movieList = MovieItem.parseMovieItems(response);
+
+            if (mMovieAdapter == null){
+                mMovieAdapter = new MovieAdapter( getActivity(), movieList);
+            }else{
+                mMovieAdapter.clear();
+
+                mMovieAdapter.addAll(movieList);
+            }
+
+            if ( gridView != null && movieList != null) {
+                Log.d(TAG, "Movie list size is "+ movieList.size());
+
+                gridView.setAdapter( mMovieAdapter );
+            }
+        }
+    };
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,33 +95,7 @@ public class MovieGridFragment extends Fragment {
         Uri popularMoviesNetworkUri = MovieDbUtil.getNetworkUri(MovieDbUtil.POPULAR_MOVIES);
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, popularMoviesNetworkUri.toString(), null, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-//                        Log.d("JSON","Response: " + response.toString());
-                        // Create Movie items from response.
-
-                        movieList = MovieItem.parseMovieItems(response);
-
-                        MovieAdapter movieAdapter = new MovieAdapter( getActivity(), movieList );
-
-                        if ( gridView != null && movieList != null) {
-                            Log.d(TAG, "Movie list size is "+ movieList.size());
-
-                            gridView.setAdapter( movieAdapter );
-                        }
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO Auto-generated method stub
-                        Log.d("JSON","Response: error");
-
-                        Log.d("JSON", error.getMessage());
-                    }
-                });
+                (Request.Method.GET, popularMoviesNetworkUri.toString(), null, jsonResponseListener ,jsonErrorListener );
 
         NetworkRequest.getInstance(getActivity()).addToRequestQueue(jsObjRequest);
 
@@ -106,25 +115,61 @@ public class MovieGridFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch( item.getItemId() ){
-            case R.id.menuSortNewest:
+            case R.id.menuSortPopularity:
                 Toast.makeText(getContext(), "SORT BY NEWEST", Toast.LENGTH_SHORT).show();
+
+                if( sortOrder != MovieDbUtil.POPULARITY_SORT ){
+                    sortOrder = MovieDbUtil.POPULARITY_SORT;
+
+                    sort();
+                }
 
                 return true;
             case R.id.menuSortRating:
                 Toast.makeText(getContext(), "SORT BY RATING", Toast.LENGTH_SHORT).show();
 
+                if( sortOrder != MovieDbUtil.RATING_SORT ){
+                    sortOrder = MovieDbUtil.RATING_SORT;
+
+                    sort();
+                }
                 return true;
 
             case R.id.menuSortFavorites:
                 Toast.makeText(getContext(), "SORT BY FAVORITES", Toast.LENGTH_SHORT).show();
 
+                if( sortOrder != MovieDbUtil.FAVORITE_SORT ){
+                    sortOrder = MovieDbUtil.FAVORITE_SORT;
+
+                    sort();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    void test(){
-        Log.d(TAG, "hello");
+    private void sort() {
+        String requestType = null ;
+        switch ( sortOrder ){
+            case MovieDbUtil.POPULARITY_SORT:
+                requestType = MovieDbUtil.POPULAR_MOVIES;
+                break;
+            case MovieDbUtil.RATING_SORT:
+                requestType = MovieDbUtil.TOP_RATED_MOVIES;
+                break;
+            case MovieDbUtil.FAVORITE_SORT:
+                //
+                break;
+            default:
+                requestType = MovieDbUtil.POPULAR_MOVIES;
+        }
+
+        Uri networkUri = MovieDbUtil.getNetworkUri(requestType);
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, networkUri.toString(), null, jsonResponseListener ,jsonErrorListener );
+
+        NetworkRequest.getInstance(getActivity()).addToRequestQueue(jsObjRequest);
     }
 }

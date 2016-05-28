@@ -8,7 +8,7 @@
 
         <menu>
             <item
-                android:id="@+id/menuSortNewest"
+                android:id="@+id/menuSortPopularity"
                 android:title="@string/sort_by_newest" />
             <item
                 android:id="@+id/menuSortRating"
