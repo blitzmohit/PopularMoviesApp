@@ -28,26 +28,22 @@ public class DetailsViewFragment extends Fragment {
     private MovieItem movie;
 
     @BindView(R.id.detail_year)
-    private
     TextView year;
 
     @BindView(R.id.detail_rating)
-    private
     TextView rating;
 
     @BindView(R.id.detail_runtime)
     TextView runtime;
 
     @BindView(R.id.detail_overview)
-    private
+
     TextView overview;
 
     @BindView(R.id.detail_title)
-    private
     TextView title;
 
     @BindView(R.id.detail_poster)
-    private
     ImageView poster;
 
     @BindView(R.id.detail_part)

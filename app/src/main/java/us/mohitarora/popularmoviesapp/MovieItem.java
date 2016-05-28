@@ -11,13 +11,13 @@ import java.util.ArrayList;
  * Created by geek90 on 5/21/16.
  */
 @Parcel
-class MovieItem {
-    private String id;
-    private String title;
-    private String overview;
-    private String posterPath;
-    private Double voteAverage;
-    private String releaseDate;
+public class MovieItem {
+    public String id;
+    public String title;
+    public String overview;
+    public String posterPath;
+    public Double voteAverage;
+    public String releaseDate;
 
     private MovieItem() {
     }
