@@ -81,7 +81,7 @@ public class MovieGridFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate( R.layout.movie_grid_fragment,  container, false );
+        View view = inflater.inflate( R.layout.fragment_movie_grid,  container, false );
 
         gridView = (GridView) view.findViewById( R.id.movie_grid );
 
@@ -91,8 +91,6 @@ public class MovieGridFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
-        ((MainActivity)getActivity()).setActionBarTitle( "Popular Movies App");
 
         Uri popularMoviesNetworkUri = MovieDbUtil.getNetworkUri(MovieDbUtil.POPULAR_MOVIES);
 

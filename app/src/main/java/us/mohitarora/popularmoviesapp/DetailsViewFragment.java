@@ -61,7 +61,7 @@ public class DetailsViewFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.detail_view_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_detail, container, false);
 
         MovieItem movieItem = Parcels.unwrap(getArguments().getParcelable("movieItem"));
 
@@ -79,7 +79,6 @@ public class DetailsViewFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        ((MainActivity)getActivity()).setActionBarTitle( "Movie Detail");
         if (movie != null) {
 
             title.setText(movie.getTitle());
