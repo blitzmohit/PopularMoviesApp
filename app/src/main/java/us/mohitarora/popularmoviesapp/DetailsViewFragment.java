@@ -48,14 +48,12 @@ public class DetailsViewFragment extends Fragment {
     @BindView(R.id.detail_part)
     View part;
 
-    private String TAG;
+    private String TAG = DetailsViewFragment.class.getSimpleName();
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        TAG = this.getClass().getSimpleName();
     }
 
     @Nullable

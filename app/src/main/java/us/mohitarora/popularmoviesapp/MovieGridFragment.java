@@ -29,7 +29,7 @@ import java.util.ArrayList;
  */
 
 public class MovieGridFragment extends Fragment {
-    private static String TAG;
+    private static String TAG = MovieGridFragment.class.getSimpleName();
 
     private GridView gridView;
 
@@ -72,8 +72,6 @@ public class MovieGridFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        TAG = this.getClass().getSimpleName();
 
         setHasOptionsMenu(true);
     }
