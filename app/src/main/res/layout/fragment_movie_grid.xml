@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:id="@+id/main_progress_bar"/>
+
+
 <GridView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -8,6 +20,6 @@
     android:verticalSpacing="0dp"
     android:horizontalSpacing="0dp"
     android:stretchMode="columnWidth"
-    android:id="@+id/movie_grid">
-</GridView>
-
+    android:id="@+id/movie_grid"
+    android:visibility="gone"/>
+</LinearLayout>

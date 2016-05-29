@@ -99,7 +99,8 @@
                         android:paddingRight="20dp"
                         android:paddingTop="4dp"
                         android:text="MARK AS \nFAVORITE"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:visibility="gone"/>
                 </LinearLayout>
             </LinearLayout>
 

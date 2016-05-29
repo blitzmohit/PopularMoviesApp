@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -23,6 +24,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by admin on 5/25/2016.
  *
@@ -31,7 +35,11 @@ import java.util.ArrayList;
 public class MovieGridFragment extends Fragment {
     private static String TAG = MovieGridFragment.class.getSimpleName();
 
-    private GridView gridView;
+    @BindView(R.id.movie_grid)
+    GridView gridView;
+
+    @BindView(R.id.main_progress_bar)
+    ProgressBar progressBar;
 
     private MovieAdapter mMovieAdapter;
 
@@ -43,7 +51,9 @@ public class MovieGridFragment extends Fragment {
         public void onErrorResponse(VolleyError error) {
             Log.d("JSON","Response: error");
 
-            Log.d("JSON", error.getMessage());
+            progressBar.setVisibility( View.GONE );
+
+            Toast.makeText(getActivity(), "Could not fetch from the API", Toast.LENGTH_SHORT).show();
         }
     };
     private Response.Listener jsonResponseListener = new Response.Listener<JSONObject>() {
@@ -61,10 +71,14 @@ public class MovieGridFragment extends Fragment {
                 mMovieAdapter.addAll(movieList);
             }
 
-            if ( gridView != null && movieList != null) {
+            if ( gridView != null && movieList != null ) {
                 Log.d(TAG, "Movie list size is "+ movieList.size());
 
                 gridView.setAdapter( mMovieAdapter );
+
+                gridView.setVisibility( View.VISIBLE );
+
+                progressBar.setVisibility( View.GONE );
             }
         }
     };
@@ -81,7 +95,7 @@ public class MovieGridFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate( R.layout.fragment_movie_grid,  container, false );
 
-        gridView = (GridView) view.findViewById( R.id.movie_grid );
+        ButterKnife.bind(this,view);
 
         return view;
     }
@@ -103,9 +117,9 @@ public class MovieGridFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.grid_fragment_menu, menu);
 
-        Menu subMenu = menu.findItem(R.id.sort).getSubMenu();
+//        Menu subMenu = menu.findItem(R.id.sort).getSubMenu();
 
-        subMenu.add( Menu.NONE, R.id.menuSortFavorites, Menu.NONE, R.string.sort_by_favorites );
+//        subMenu.add( Menu.NONE, R.id.menuSortFavorites, Menu.NONE, R.string.sort_by_favorites );
 
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -148,6 +162,10 @@ public class MovieGridFragment extends Fragment {
     }
 
     private void sort() {
+        progressBar.setVisibility( View.VISIBLE );
+
+        gridView.setVisibility( View.GONE );
+
         String requestType = null ;
         switch ( sortOrder ){
             case MovieDbUtil.POPULARITY_SORT:
@@ -169,5 +187,9 @@ public class MovieGridFragment extends Fragment {
                 (Request.Method.GET, networkUri.toString(), null, jsonResponseListener ,jsonErrorListener );
 
         NetworkRequest.getInstance(getActivity()).addToRequestQueue(jsObjRequest);
+    }
+
+    void hideAllExceptProgress(){
+
     }
 }

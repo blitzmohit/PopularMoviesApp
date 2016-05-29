@@ -19,7 +19,7 @@ public class MovieItem {
     public Double voteAverage;
     public String releaseDate;
 
-    private MovieItem() {
+    public MovieItem() {
     }
 
     public static ArrayList<MovieItem> parseMovieItems(JSONObject response) {
