@@ -5,10 +5,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import org.parceler.Parcels;
 
 public class MainActivity extends AppCompatActivity implements MovieAdapter.OnMovieSelectedListener {
+
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -25,8 +28,32 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnMo
 
             fm.beginTransaction()
                     .add( R.id.container, fragment )
+                    .addToBackStack(null)
                     .commit();
         }
+
+        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
+
+                Log.d(TAG, "in here count is "+ backStackEntryCount);
+                ActionBar actionBar = getSupportActionBar();
+                if (actionBar != null){
+                    if(backStackEntryCount > 1){
+                        actionBar.setDisplayHomeAsUpEnabled(true);
+                    }else{
+                        actionBar.setDisplayHomeAsUpEnabled(false);
+                    }
+                }
+            }
+        });
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
     @Override
@@ -43,12 +70,25 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnMo
                 .replace(R.id.container, nextFrag)
                 .addToBackStack(null)
                 .commit();
+    }
 
-
+    public void setActionBarTitle(String title) {
         ActionBar actionBar = getSupportActionBar();
 
-        if (actionBar != null){
-            actionBar.setTitle("Movie Detail");
+        if( actionBar != null ){
+            actionBar.setTitle(title);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        int count = getFragmentManager().getBackStackEntryCount();
+
+        if (count == 0) {
+            finish();
+        } else {
+            getFragmentManager().popBackStack();
         }
 
     }

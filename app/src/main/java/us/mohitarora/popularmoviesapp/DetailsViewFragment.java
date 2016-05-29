@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageRequest;
 
 import org.parceler.Parcels;
@@ -57,8 +56,6 @@ public class DetailsViewFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         TAG = this.getClass().getSimpleName();
-
-        ImageLoader mImageLoader = NetworkRequest.getInstance(getActivity()).getImageLoader();
     }
 
     @Nullable
@@ -82,6 +79,7 @@ public class DetailsViewFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
+        ((MainActivity)getActivity()).setActionBarTitle( "Movie Detail");
         if (movie != null) {
 
             title.setText(movie.getTitle());

@@ -92,6 +92,8 @@ public class MovieGridFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
+        ((MainActivity)getActivity()).setActionBarTitle( "Popular Movies App");
+
         Uri popularMoviesNetworkUri = MovieDbUtil.getNetworkUri(MovieDbUtil.POPULAR_MOVIES);
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
@@ -103,7 +105,7 @@ public class MovieGridFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.main_menu, menu);
+        inflater.inflate(R.menu.grid_fragment_menu, menu);
 
         Menu subMenu = menu.findItem(R.id.sort).getSubMenu();
 
