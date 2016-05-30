@@ -188,8 +188,4 @@ public class MovieGridFragment extends Fragment {
 
         NetworkRequest.getInstance(getActivity()).addToRequestQueue(jsObjRequest);
     }
-
-    void hideAllExceptProgress(){
-
-    }
 }

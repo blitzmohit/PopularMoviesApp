@@ -20,7 +20,8 @@
             android:layout_marginStart="@dimen/detail_image_horizontal_margin"
             android:text="Chappie"
             android:textColor="@android:color/white"
-            android:textSize="54sp" />
+            android:maxLines="2"
+            android:textSize="40sp" />
     </FrameLayout>
 
     <ScrollView
