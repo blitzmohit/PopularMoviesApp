@@ -82,4 +82,12 @@ public class MovieItem {
     public String getYear() {
         return releaseDate.split("-")[0];
     }
+
+    public String getDate() {
+        return releaseDate;
+    }
+
+    public String getPosterPath(){
+        return posterPath;
+    }
 }

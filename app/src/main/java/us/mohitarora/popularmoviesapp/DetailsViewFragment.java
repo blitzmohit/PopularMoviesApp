@@ -1,24 +1,32 @@
 package us.mohitarora.popularmoviesapp;
 
-import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+        import android.graphics.Bitmap;
+        import android.os.AsyncTask;
+        import android.os.Bundle;
+        import android.support.annotation.Nullable;
+        import android.support.v4.app.Fragment;
+        import android.util.Log;
+        import android.view.LayoutInflater;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.widget.ImageView;
+        import android.widget.TextView;
+        import android.widget.Toast;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
+        import com.android.volley.Response;
+        import com.android.volley.VolleyError;
+        import com.android.volley.toolbox.ImageRequest;
 
-import org.parceler.Parcels;
+        import org.json.JSONException;
+        import org.json.JSONObject;
+        import org.parceler.Parcels;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+        import java.io.File;
+        import java.io.FileOutputStream;
+        import java.io.IOException;
+
+        import butterknife.BindView;
+        import butterknife.ButterKnife;
 
 /**
  * Created by geek90 on 5/27/16.
@@ -44,8 +52,10 @@ public class DetailsViewFragment extends Fragment {
     @BindView(R.id.detail_poster)
     ImageView poster;
 
-    @BindView(R.id.detail_part)
-    View part;
+    @BindView(R.id.detail_mark_favorite)
+    TextView markFavorite;
+
+    private MovieItem movieItem;
 
     private String TAG = DetailsViewFragment.class.getSimpleName();
 
@@ -62,7 +72,16 @@ public class DetailsViewFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        MovieItem movieItem = Parcels.unwrap(getArguments().getParcelable("movieItem"));
+        movieItem = Parcels.unwrap(getArguments().getParcelable("movieItem"));
+
+        markFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WriteToFile writeToFile = new WriteToFile();
+
+                writeToFile.execute();
+            }
+        });
 
         if (movieItem != null) {
             showMovie(movieItem);
@@ -71,8 +90,11 @@ public class DetailsViewFragment extends Fragment {
         return view;
     }
 
+
+
     public void showMovie( MovieItem movie ) {
         if (movie != null) {
+            movieItem = movie;
 
             title.setText(movie.getTitle());
 
@@ -102,6 +124,66 @@ public class DetailsViewFragment extends Fragment {
 
         } else {
             Log.d(TAG, "movie is null");
+        }
+    }
+
+    private class WriteToFile extends AsyncTask<Void,Void, Void>{
+        FileOutputStream fileOutputStream;
+        @Override
+        protected Void doInBackground(Void... params) {
+            String message = null;
+
+            JSONObject storageObject = new JSONObject();
+            try {
+                storageObject.put(MovieDbUtil.TITLE, movieItem.getTitle());
+
+                storageObject.put(MovieDbUtil.OVERVIEW, movieItem.getOverview());
+
+                storageObject.put(MovieDbUtil.ID, movieItem.getId());
+
+                storageObject.put(MovieDbUtil.RELEASE_DATE, movieItem.getDate());
+
+                storageObject.put(MovieDbUtil.POSTER_PATH, movieItem.getPosterPath());
+
+                storageObject.put(MovieDbUtil.VOTE_AVERAGE, movieItem.getVoteAverage());
+
+                message = storageObject.toString();
+
+                Log.d(TAG, movieItem.getId());
+
+                Log.d(TAG, message);
+
+                File directory = new File(getActivity().getFilesDir(), "movies");
+
+                directory.mkdirs();
+
+                File file = new File(directory, movieItem.getId());
+
+                if (!file.exists()) {
+                    Log.d(TAG,"file does not exist");
+
+                    fileOutputStream = new FileOutputStream(file);
+
+                    fileOutputStream.write(message.getBytes());
+
+                    fileOutputStream.flush();
+
+                    fileOutputStream.close();
+
+                }
+            }catch( IOException e ){
+                Log.d(TAG, e.getMessage());
+            }catch (JSONException exception){
+                Log.d(TAG, exception.getMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+            Toast.makeText(getActivity(), "Favorite Saved", Toast.LENGTH_SHORT).show();
         }
     }
 }
