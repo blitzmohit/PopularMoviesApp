@@ -56,7 +56,9 @@ class MovieAdapter extends ArrayAdapter<MovieItem>{
         return convertView;
     }
 
-
+    public void selectPoster(){
+        listener.onPosterSelected( getItem(0));
+    }
 
     interface OnMovieSelectedListener {
         void onPosterSelected(MovieItem movieItem);

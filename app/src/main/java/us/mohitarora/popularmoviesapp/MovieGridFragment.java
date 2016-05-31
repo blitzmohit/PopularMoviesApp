@@ -43,6 +43,8 @@ public class MovieGridFragment extends Fragment {
 
     private MovieAdapter mMovieAdapter;
 
+    private boolean showFirst;
+
     private int sortOrder = MovieDbUtil.POPULARITY_SORT; //default sort order is by popularity
 
     private Response.ErrorListener jsonErrorListener = new Response.ErrorListener() {
@@ -51,9 +53,9 @@ public class MovieGridFragment extends Fragment {
         public void onErrorResponse(VolleyError error) {
             Log.d("JSON","Response: error");
 
-            progressBar.setVisibility( View.GONE );
+//            progressBar.setVisibility( View.GONE );
 
-            Toast.makeText(getActivity(), "Could not fetch from the API", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "Could not fetch from the API", Toast.LENGTH_SHORT).show();
         }
     };
     private Response.Listener jsonResponseListener = new Response.Listener<JSONObject>() {
@@ -76,6 +78,13 @@ public class MovieGridFragment extends Fragment {
 
                 gridView.setAdapter( mMovieAdapter );
 
+                //We are in dual pane mode, select the first item as selected
+                if( showFirst ){
+                    mMovieAdapter.selectPoster();
+
+                    showFirst = false;
+                }
+
                 gridView.setVisibility( View.VISIBLE );
 
                 progressBar.setVisibility( View.GONE );
@@ -97,6 +106,8 @@ public class MovieGridFragment extends Fragment {
 
         ButterKnife.bind(this,view);
 
+        showFirst = getArguments().getBoolean("selectFirst");
+
         return view;
     }
 
@@ -117,9 +128,9 @@ public class MovieGridFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.grid_fragment_menu, menu);
 
-//        Menu subMenu = menu.findItem(R.id.sort).getSubMenu();
+        Menu subMenu = menu.findItem(R.id.sort).getSubMenu();
 
-//        subMenu.add( Menu.NONE, R.id.menuSortFavorites, Menu.NONE, R.string.sort_by_favorites );
+        subMenu.add( Menu.NONE, R.id.menuSortFavorites, Menu.NONE, R.string.sort_by_favorites );
 
         super.onCreateOptionsMenu(menu, inflater);
     }

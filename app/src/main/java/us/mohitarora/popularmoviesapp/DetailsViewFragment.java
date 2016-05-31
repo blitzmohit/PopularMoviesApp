@@ -22,10 +22,9 @@ import butterknife.ButterKnife;
 
 /**
  * Created by geek90 on 5/27/16.
+ *
  */
 public class DetailsViewFragment extends Fragment {
-    private MovieItem movie;
-
     @BindView(R.id.detail_year)
     TextView year;
 
@@ -61,22 +60,18 @@ public class DetailsViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
 
+        ButterKnife.bind(this, view);
+
         MovieItem movieItem = Parcels.unwrap(getArguments().getParcelable("movieItem"));
 
         if (movieItem != null) {
-            this.movie = movieItem;
+            showMovie(movieItem);
         }
-
-        ButterKnife.bind(this, view);
 
         return view;
     }
 
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
+    public void showMovie( MovieItem movie ) {
         if (movie != null) {
 
             title.setText(movie.getTitle());
