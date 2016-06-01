@@ -102,7 +102,7 @@ public class DetailsViewFragment extends Fragment {
 
             year.setText(movie.getYear());
 
-            rating.setText(movie.getVoteAverage());
+            rating.setText(movie.getVoteAverageByTen());
 
             ImageRequest request = new ImageRequest(movie.getPosterUri("w154"),
                     new Response.Listener<Bitmap>() {

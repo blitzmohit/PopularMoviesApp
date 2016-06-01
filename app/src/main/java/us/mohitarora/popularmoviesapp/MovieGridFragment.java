@@ -1,6 +1,7 @@
 package us.mohitarora.popularmoviesapp;
 
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,8 +21,15 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -177,26 +185,92 @@ public class MovieGridFragment extends Fragment {
 
         gridView.setVisibility( View.GONE );
 
-        String requestType = null ;
-        switch ( sortOrder ){
-            case MovieDbUtil.POPULARITY_SORT:
-                requestType = MovieDbUtil.POPULAR_MOVIES;
-                break;
-            case MovieDbUtil.RATING_SORT:
-                requestType = MovieDbUtil.TOP_RATED_MOVIES;
-                break;
-            case MovieDbUtil.FAVORITE_SORT:
-                //
-                break;
-            default:
-                requestType = MovieDbUtil.POPULAR_MOVIES;
+        if (sortOrder == MovieDbUtil.FAVORITE_SORT){
+
+            ReadFromFile readFromFile = new ReadFromFile();
+
+            readFromFile.execute();
+
+        }else {
+
+            String requestType = null;
+            switch (sortOrder) {
+                case MovieDbUtil.POPULARITY_SORT:
+                    requestType = MovieDbUtil.POPULAR_MOVIES;
+                    break;
+                case MovieDbUtil.RATING_SORT:
+                    requestType = MovieDbUtil.TOP_RATED_MOVIES;
+                    break;
+                default:
+                    requestType = MovieDbUtil.POPULAR_MOVIES;
+            }
+
+            Uri networkUri = MovieDbUtil.getNetworkUri(requestType);
+
+            JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                    (Request.Method.GET, networkUri.toString(), null, jsonResponseListener, jsonErrorListener);
+
+            NetworkRequest.getInstance(getActivity()).addToRequestQueue(jsObjRequest);
+        }
+    }
+
+    private class ReadFromFile extends AsyncTask<Void, Void, JSONObject> {
+        @Override
+        protected JSONObject doInBackground(Void... params) {
+            File directory = new File(getActivity().getFilesDir(), "movies");
+
+            FileInputStream fileInputStream;
+
+            StringBuilder stringBuilder = new StringBuilder();
+
+            stringBuilder.append("{" +
+                    "  \"page\": 1," +
+                    "  \"results\": [" +
+                    "    ");
+
+            if (directory.exists() && directory.isDirectory()){
+
+                File[] files = directory.listFiles();
+
+                for (int i =0; i< files.length ; i++) {
+                    File file = files[i];
+
+                    try {
+                        fileInputStream = new FileInputStream(file);
+
+                        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
+
+                        String strLine;
+
+                        while ((strLine = bufferedReader.readLine()) != null) {
+                            stringBuilder.append(strLine);
+                        }
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    if( i < files.length -1 ){
+                        stringBuilder.append(",");
+                    }
+                }
+                stringBuilder.append("]}");
+
+                try{
+                    return new JSONObject(stringBuilder.toString());
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
         }
 
-        Uri networkUri = MovieDbUtil.getNetworkUri(requestType);
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            super.onPostExecute(jsonObject);
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, networkUri.toString(), null, jsonResponseListener ,jsonErrorListener );
-
-        NetworkRequest.getInstance(getActivity()).addToRequestQueue(jsObjRequest);
+            jsonResponseListener.onResponse(jsonObject);
+        }
     }
 }

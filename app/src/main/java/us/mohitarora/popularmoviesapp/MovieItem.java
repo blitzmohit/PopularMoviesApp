@@ -76,8 +76,10 @@ public class MovieItem {
     }
 
     public String getVoteAverage() {
-        return String.valueOf(voteAverage) + "/10";
+        return String.valueOf(voteAverage);
     }
+
+    public String getVoteAverageByTen() {return String.valueOf(voteAverage) + "/10";}
 
     public String getYear() {
         return releaseDate.split("-")[0];
