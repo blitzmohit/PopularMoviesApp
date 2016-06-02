@@ -22,6 +22,13 @@ class MovieAdapter extends ArrayAdapter<MovieItem>{
 
     private Context context;
 
+    private static View prevTopRibbon;
+
+    private static View prevBottomRibbon;
+
+    private NetworkImageView poster;
+    private static int selected;
+
 
     public MovieAdapter(Context context, List<MovieItem> objects) {
         super(context, 0 , objects);
@@ -34,14 +41,34 @@ class MovieAdapter extends ArrayAdapter<MovieItem>{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         final MovieItem movieItem = getItem(position);
 
         if (convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.movie_item, parent, false);
         }
 
-        NetworkImageView poster = (NetworkImageView)convertView.findViewById(R.id.poster);
+        poster = (NetworkImageView)convertView.findViewById(R.id.poster);
+
+        final View topRibbon = convertView.findViewById(R.id.top_ribbon);
+
+        final View bottomRibbon = convertView.findViewById(R.id.bottom_ribbon);
+
+        if( position == selected ) {
+            topRibbon.setVisibility(View.VISIBLE);
+
+            bottomRibbon.setVisibility(View.VISIBLE);
+
+            if( prevTopRibbon == null && prevBottomRibbon ==null ){
+                prevTopRibbon = topRibbon;
+
+                prevBottomRibbon = bottomRibbon;
+            }
+        }else{
+            topRibbon.setVisibility(View.GONE);
+
+            bottomRibbon.setVisibility(View.GONE);
+        }
 
         poster.setImageUrl( movieItem.getPosterUri(), mImageLoader );
 
@@ -50,8 +77,22 @@ class MovieAdapter extends ArrayAdapter<MovieItem>{
             @Override
             public void onClick(View v) {
                 listener.onPosterSelected(movieItem);
-            }
-        });
+
+                selected = position;
+
+                prevBottomRibbon.setVisibility(View.GONE);
+
+                prevTopRibbon.setVisibility(View.GONE);
+
+                prevTopRibbon = topRibbon;
+
+                prevBottomRibbon = bottomRibbon;
+
+                topRibbon.setVisibility(View.VISIBLE);
+
+                bottomRibbon.setVisibility(View.VISIBLE);
+    }
+});
 
         return convertView;
     }

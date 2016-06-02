@@ -71,22 +71,24 @@ public class DetailsViewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
 
         ButterKnife.bind(this, view);
+        if( getArguments() != null ) {
 
-        movieItem = Parcels.unwrap(getArguments().getParcelable("movieItem"));
 
-        markFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                WriteToFile writeToFile = new WriteToFile();
+            movieItem = Parcels.unwrap(getArguments().getParcelable("movieItem"));
 
-                writeToFile.execute();
+            markFavorite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    WriteToFile writeToFile = new WriteToFile();
+
+                    writeToFile.execute();
+                }
+            });
+
+            if (movieItem != null) {
+                showMovie(movieItem);
             }
-        });
-
-        if (movieItem != null) {
-            showMovie(movieItem);
         }
-
         return view;
     }
 
@@ -120,7 +122,6 @@ public class DetailsViewFragment extends Fragment {
 
             NetworkRequest.getInstance(getContext()).addToRequestQueue(request);
 
-//            poster.setImageUrl(movie.getPosterUri(), mImageLoader);
 
         } else {
             Log.d(TAG, "movie is null");

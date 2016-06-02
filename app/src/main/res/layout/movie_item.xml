@@ -1,10 +1,32 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
+
     <com.android.volley.toolbox.NetworkImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         android:maxHeight="250dp"
-        android:id="@+id/poster"/>
-</FrameLayout>
+        android:layout_alignWithParentIfMissing="true"
+        android:id="@+id/poster"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@color/colorAccent"
+        android:id="@+id/top_ribbon"
+        android:layout_alignParentTop="true"
+        android:visibility="gone"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@color/colorAccent"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/bottom_ribbon"
+        android:visibility="gone"/>
+
+</RelativeLayout>

@@ -114,7 +114,9 @@ public class MovieGridFragment extends Fragment {
 
         ButterKnife.bind(this,view);
 
-        showFirst = getArguments().getBoolean("selectFirst");
+        if( getArguments() != null){
+            showFirst = getArguments().getBoolean("selectFirst");
+        }
 
         return view;
     }
@@ -134,6 +136,8 @@ public class MovieGridFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+
         inflater.inflate(R.menu.grid_fragment_menu, menu);
 
         Menu subMenu = menu.findItem(R.id.sort).getSubMenu();
