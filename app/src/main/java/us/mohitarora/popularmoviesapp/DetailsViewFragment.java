@@ -1,32 +1,38 @@
 package us.mohitarora.popularmoviesapp;
 
-        import android.graphics.Bitmap;
-        import android.os.AsyncTask;
-        import android.os.Bundle;
-        import android.support.annotation.Nullable;
-        import android.support.v4.app.Fragment;
-        import android.util.Log;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.ImageView;
-        import android.widget.TextView;
-        import android.widget.Toast;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
-        import com.android.volley.Response;
-        import com.android.volley.VolleyError;
-        import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 
-        import org.json.JSONException;
-        import org.json.JSONObject;
-        import org.parceler.Parcels;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.parceler.Parcels;
 
-        import java.io.File;
-        import java.io.FileOutputStream;
-        import java.io.IOException;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
-        import butterknife.BindView;
-        import butterknife.ButterKnife;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by geek90 on 5/27/16.
@@ -55,6 +61,13 @@ public class DetailsViewFragment extends Fragment {
     @BindView(R.id.detail_mark_favorite)
     TextView markFavorite;
 
+    @BindView(R.id.detail_trailers)
+    LinearLayout trailerView;
+
+    @BindView(R.id.detail_reviews)
+    LinearLayout reviewView;
+
+
     private MovieItem movieItem;
 
     private String TAG = DetailsViewFragment.class.getSimpleName();
@@ -72,8 +85,6 @@ public class DetailsViewFragment extends Fragment {
 
         ButterKnife.bind(this, view);
         if( getArguments() != null ) {
-
-
             movieItem = Parcels.unwrap(getArguments().getParcelable("movieItem"));
 
             markFavorite.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +116,90 @@ public class DetailsViewFragment extends Fragment {
             year.setText(movie.getYear());
 
             rating.setText(movie.getVoteAverageByTen());
+
+            Uri trailersNetworkUri = MovieDbUtil.getNetworkUri(movie.getId(), MovieDbUtil.VIDEOS);
+
+            Uri reviewsNetworkUri =  MovieDbUtil.getNetworkUri(movie.getId(), MovieDbUtil.REVIEWS);
+
+            Response.Listener<JSONObject> jsonTrailerResponseListener = new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+
+                    movieItem.setTrailers( Trailer.parseTrailer(response));
+
+                    for(final Trailer trailer : movieItem.getTrailers() ){
+                        LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+
+                        View trailerItemView = layoutInflater.inflate(R.layout.trailer_item, trailerView, false);
+
+                        TextView trailerTextView = (TextView) trailerItemView.findViewById(R.id.trailer_text);
+
+                        trailerTextView.setText( trailer.name );
+
+                        trailerItemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                String id = trailer.key;
+                                try {
+                                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + id));
+                                    getContext().startActivity(intent);
+                                } catch (ActivityNotFoundException ex) {
+                                    Intent intent = new Intent(Intent.ACTION_VIEW,
+                                            Uri.parse("http://m.youtube.com/watch?v=" + id));
+                                    getContext().startActivity(intent);
+                                }
+                            }
+                        });
+
+                        trailerView.addView(trailerItemView);
+                    }
+                }
+            };
+
+
+            Response.Listener<JSONObject> jsonReviewResponseListener = new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+
+                    movieItem.setReviews( Review.parseReview(response) );
+
+                    for(Review review : movieItem.getReviews() ){
+                        LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+
+                        View reviewItemView = layoutInflater.inflate(R.layout.review_item, reviewView, false);
+
+                        TextView reviewTextView = (TextView) reviewItemView.findViewById(R.id.review_text);
+
+                        reviewTextView.setText( review.content );
+
+                        TextView reviewAuthorView =  (TextView) reviewItemView.findViewById(R.id.review_author);
+
+                        reviewAuthorView.setText( "by "+review.author );
+
+                        reviewView.addView( reviewItemView );
+                    }
+                }
+            };
+
+            Response.ErrorListener jsonErrorListener = new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d(TAG," encountered an error ");
+
+                    Log.d(TAG,error.getMessage());
+                }
+            };
+
+            JsonObjectRequest trailerRequest = new JsonObjectRequest
+                    (Request.Method.GET, trailersNetworkUri.toString(), null, jsonTrailerResponseListener ,jsonErrorListener );
+
+            JsonObjectRequest reviewRequest = new JsonObjectRequest
+                    (Request.Method.GET, reviewsNetworkUri.toString(), null, jsonReviewResponseListener ,jsonErrorListener );
+
+
+            NetworkRequest.getInstance(getActivity()).addToRequestQueue(trailerRequest);
+
+            NetworkRequest.getInstance(getActivity()).addToRequestQueue(reviewRequest);
 
             ImageRequest request = new ImageRequest(movie.getPosterUri("w154"),
                     new Response.Listener<Bitmap>() {

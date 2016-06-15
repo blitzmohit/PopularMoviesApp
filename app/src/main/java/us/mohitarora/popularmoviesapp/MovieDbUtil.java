@@ -35,7 +35,11 @@ class MovieDbUtil {
 
     static final String BASE_IMAGE_URI = "http://image.tmdb.org/t/p/";
 
-    static Uri getNetworkUri( String requestType ){
+    static final String VIDEOS = "videos";
+
+    static final String REVIEWS = "reviews";
+
+    static Uri getNetworkUri( String... requestType ){
 
         Uri.Builder builder = new Uri.Builder();
 
@@ -44,9 +48,12 @@ class MovieDbUtil {
         builder.scheme("https")
                 .authority(BASE_URL)
                 .appendPath(BASE_PATH)
-                .appendPath("movie")
-                .appendPath(requestType)
-                .appendQueryParameter("api_key",APIKEY.API_KEY);
+                .appendPath("movie");
+
+        for( String request : requestType ){
+            builder.appendPath(request);
+        }
+        builder.appendQueryParameter("api_key",APIKEY.API_KEY);
 
         return builder.build();
     }

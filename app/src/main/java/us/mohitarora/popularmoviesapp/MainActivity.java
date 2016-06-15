@@ -2,6 +2,7 @@ package us.mohitarora.popularmoviesapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -26,7 +27,15 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnMo
     @BindBool(R.bool.has_two_panes)
     boolean isTwoPane;
 
-    @Override
+    private MovieItem selectedMovie;
+
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        selectedMovie = savedInstanceState.getParcelable("movieItem");
+    }
+
+        @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
 
@@ -62,6 +71,18 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnMo
 
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        if( getSelectedMovie() != null ){
+            savedInstanceState.putParcelable("movieItem", Parcels.wrap(getSelectedMovie()));
+        }
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    private MovieItem getSelectedMovie() {
+
+        return selectedMovie;
+    }
 
     @Override
     protected void onStart() {
@@ -70,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnMo
 
     @Override
     public void onPosterSelected(MovieItem movieItem) {
+        selectedMovie = movieItem ;
         Bundle bundle = new Bundle();
 
         bundle.putParcelable("movieItem", Parcels.wrap(movieItem));

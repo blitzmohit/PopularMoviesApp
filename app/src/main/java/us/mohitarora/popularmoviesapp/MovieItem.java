@@ -19,6 +19,10 @@ public class MovieItem {
     public Double voteAverage;
     public String releaseDate;
 
+    public ArrayList<Trailer> trailers;
+
+    public ArrayList<Review> reviews;
+
     public MovieItem() {
     }
 
@@ -91,5 +95,21 @@ public class MovieItem {
 
     public String getPosterPath(){
         return posterPath;
+    }
+
+    public void setTrailers(ArrayList<Trailer> trailers) {
+        this.trailers = trailers;
+    }
+
+    public void setReviews(ArrayList<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public ArrayList<Trailer> getTrailers() {
+        return trailers;
+    }
+
+    public ArrayList<Review> getReviews() {
+        return reviews;
     }
 }

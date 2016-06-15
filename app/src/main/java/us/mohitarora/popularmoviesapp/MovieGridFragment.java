@@ -61,9 +61,9 @@ public class MovieGridFragment extends Fragment {
         public void onErrorResponse(VolleyError error) {
             Log.d("JSON","Response: error");
 
-//            progressBar.setVisibility( View.GONE );
+            progressBar.setVisibility( View.GONE );
 
-//            Toast.makeText(getContext(), "Could not fetch from the API", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Could not fetch data from the API", Toast.LENGTH_SHORT).show();
         }
     };
     private Response.Listener jsonResponseListener = new Response.Listener<JSONObject>() {
@@ -92,6 +92,7 @@ public class MovieGridFragment extends Fragment {
 
                     showFirst = false;
                 }
+
 
                 gridView.setVisibility( View.VISIBLE );
 
@@ -274,7 +275,18 @@ public class MovieGridFragment extends Fragment {
         protected void onPostExecute(JSONObject jsonObject) {
             super.onPostExecute(jsonObject);
 
-            jsonResponseListener.onResponse(jsonObject);
+            if(jsonObject !=null){
+                jsonResponseListener.onResponse(jsonObject);
+            }else{
+                jsonErrorListener.onErrorResponse(new VolleyError());
+            }
+
+        }
+    }
+
+    public void setSelected( MovieItem movieItem ){
+        if( mMovieAdapter != null ){
+            mMovieAdapter.selected = movieItem.getId() ;
         }
     }
 }

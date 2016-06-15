@@ -27,7 +27,8 @@ class MovieAdapter extends ArrayAdapter<MovieItem>{
     private static View prevBottomRibbon;
 
     private NetworkImageView poster;
-    private static int selected;
+
+    public static String selected;
 
 
     public MovieAdapter(Context context, List<MovieItem> objects) {
@@ -54,7 +55,7 @@ class MovieAdapter extends ArrayAdapter<MovieItem>{
 
         final View bottomRibbon = convertView.findViewById(R.id.bottom_ribbon);
 
-        if( position == selected ) {
+        if( movieItem.getId().equals( selected )) {
             topRibbon.setVisibility(View.VISIBLE);
 
             bottomRibbon.setVisibility(View.VISIBLE);
@@ -78,7 +79,7 @@ class MovieAdapter extends ArrayAdapter<MovieItem>{
             public void onClick(View v) {
                 listener.onPosterSelected(movieItem);
 
-                selected = position;
+                selected = movieItem.getId();
 
                 prevBottomRibbon.setVisibility(View.GONE);
 

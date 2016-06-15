@@ -18,9 +18,9 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/detail_image_horizontal_margin"
             android:layout_marginStart="@dimen/detail_image_horizontal_margin"
+            android:maxLines="2"
             android:text="Chappie"
             android:textColor="@android:color/white"
-            android:maxLines="2"
             android:textSize="40sp" />
     </FrameLayout>
 
@@ -47,11 +47,11 @@
                     android:id="@+id/detail_poster"
                     android:layout_width="wrap_content"
                     android:layout_height="200dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="Movie Poster"
                     android:minHeight="200dp"
                     android:minWidth="154dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    android:contentDescription="Movie Poster"/>
+                    android:scaleType="fitCenter"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -103,20 +103,53 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/detail_overview"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|end"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:gravity="start"
-                android:text="A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground &quot;fight clubs&quot; forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion."
-                android:textSize="20sp" />
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/detail_overview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    android:gravity="start"
+                    android:text="A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground &quot;fight clubs&quot; forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion."
+                    android:textSize="20sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@android:color/black"
+                    />
+                <LinearLayout
+                    android:id="@+id/detail_trailers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@android:color/black"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Reviews"/>
+                <LinearLayout
+                    android:id="@+id/detail_reviews"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
