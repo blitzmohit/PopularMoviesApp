@@ -2,13 +2,8 @@ package us.mohitarora.popularmoviesapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-
 import org.parceler.Parcels;
 
 import butterknife.BindBool;
@@ -20,20 +15,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnMo
 
     private FragmentManager fragmentManager;
 
-    private DetailsViewFragment detailsViewFragment;
-
-    private MovieGridFragment movieGridFragment;
-
     @BindBool(R.bool.has_two_panes)
+
     boolean isTwoPane;
-
-    private MovieItem selectedMovie;
-
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        selectedMovie = savedInstanceState.getParcelable("movieItem");
-    }
 
         @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -44,71 +28,24 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnMo
         ButterKnife.bind(this);
 
         fragmentManager = getSupportFragmentManager();
-
-        if( movieGridFragment == null ){
-            movieGridFragment = new MovieGridFragment();
-            if( isTwoPane ){
-                Log.d(TAG, " yes this is true too");
-                Bundle bundle = new Bundle();
-
-                bundle.putBoolean("selectFirst",true);
-
-                movieGridFragment.setArguments(bundle);
-            }
-
-            fragmentManager.beginTransaction()
-                    .add( R.id.main_container, movieGridFragment )
-//                    .addToBackStack("movie-grid")
-                    .commit();
-        }
-
-         View view = findViewById(R.id.detail_container);
-
-        if( view != null && view.getVisibility() == View.VISIBLE){
-            Log.d(TAG,"Yes yes it is visible");
-        }
-
-
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        if( getSelectedMovie() != null ){
-            savedInstanceState.putParcelable("movieItem", Parcels.wrap(getSelectedMovie()));
-        }
-        super.onSaveInstanceState(savedInstanceState);
-    }
 
-    private MovieItem getSelectedMovie() {
-
-        return selectedMovie;
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
 
     @Override
     public void onPosterSelected(MovieItem movieItem) {
-        selectedMovie = movieItem ;
         Bundle bundle = new Bundle();
 
         bundle.putParcelable("movieItem", Parcels.wrap(movieItem));
 
         if( isTwoPane ){
-            if( detailsViewFragment == null){
-                detailsViewFragment = new DetailsViewFragment();
+            DetailsViewFragment detailsViewFragment = new DetailsViewFragment();
 
                 detailsViewFragment.setArguments(bundle);
 
                 fragmentManager.beginTransaction()
                         .replace(R.id.detail_container, detailsViewFragment)
-                        .addToBackStack("movie-detail")
                         .commit();
-            }else{
-                detailsViewFragment.showMovie(movieItem);
-            }
         }else{
             Intent intent = new Intent(this, DetailsActivity.class);
 

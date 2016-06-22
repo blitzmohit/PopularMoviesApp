@@ -22,10 +22,6 @@ class MovieAdapter extends ArrayAdapter<MovieItem>{
 
     private Context context;
 
-    private static View prevTopRibbon;
-
-    private static View prevBottomRibbon;
-
     private NetworkImageView poster;
 
     public static String selected;
@@ -51,26 +47,6 @@ class MovieAdapter extends ArrayAdapter<MovieItem>{
 
         poster = (NetworkImageView)convertView.findViewById(R.id.poster);
 
-        final View topRibbon = convertView.findViewById(R.id.top_ribbon);
-
-        final View bottomRibbon = convertView.findViewById(R.id.bottom_ribbon);
-
-        if( movieItem.getId().equals( selected )) {
-            topRibbon.setVisibility(View.VISIBLE);
-
-            bottomRibbon.setVisibility(View.VISIBLE);
-
-            if( prevTopRibbon == null && prevBottomRibbon ==null ){
-                prevTopRibbon = topRibbon;
-
-                prevBottomRibbon = bottomRibbon;
-            }
-        }else{
-            topRibbon.setVisibility(View.GONE);
-
-            bottomRibbon.setVisibility(View.GONE);
-        }
-
         poster.setImageUrl( movieItem.getPosterUri(), mImageLoader );
 
 
@@ -80,18 +56,6 @@ class MovieAdapter extends ArrayAdapter<MovieItem>{
                 listener.onPosterSelected(movieItem);
 
                 selected = movieItem.getId();
-
-                prevBottomRibbon.setVisibility(View.GONE);
-
-                prevTopRibbon.setVisibility(View.GONE);
-
-                prevTopRibbon = topRibbon;
-
-                prevBottomRibbon = bottomRibbon;
-
-                topRibbon.setVisibility(View.VISIBLE);
-
-                bottomRibbon.setVisibility(View.VISIBLE);
     }
 });
 

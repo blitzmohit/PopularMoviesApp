@@ -3,12 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="2">
-    <LinearLayout
+    <fragment
         android:id="@+id/main_container"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical"/>
+        android:orientation="vertical"
+        class="us.mohitarora.popularmoviesapp.MovieGridFragment"/>
     <LinearLayout
         android:id="@+id/detail_container"
         android:layout_width="0dp"
