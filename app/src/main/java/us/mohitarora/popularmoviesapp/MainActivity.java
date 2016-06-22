@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
 import org.parceler.Parcels;
 
 import butterknife.BindBool;
@@ -34,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnMo
 
     @Override
     public void onPosterSelected(MovieItem movieItem) {
+        Log.d( TAG, "inside on poster selected " + movieItem.getTitle() );
+
         Bundle bundle = new Bundle();
 
         bundle.putParcelable("movieItem", Parcels.wrap(movieItem));

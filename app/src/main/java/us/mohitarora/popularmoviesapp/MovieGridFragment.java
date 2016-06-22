@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import butterknife.BindBool;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -51,7 +52,8 @@ public class MovieGridFragment extends Fragment {
 
     private MovieAdapter mMovieAdapter;
 
-    private boolean showFirst;
+    @BindBool(R.bool.has_two_panes)
+    boolean showFirst;
 
     private int sortOrder = MovieDbUtil.POPULARITY_SORT; //default sort order is by popularity
 
@@ -88,11 +90,10 @@ public class MovieGridFragment extends Fragment {
 
                 //We are in dual pane mode, select the first item as selected
                 if( showFirst ){
+                    Log.d(TAG, "we are in dual pane mode");
+
                     mMovieAdapter.selectPoster();
-
-                    showFirst = false;
                 }
-
 
                 gridView.setVisibility( View.VISIBLE );
 
@@ -105,7 +106,12 @@ public class MovieGridFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (savedInstanceState != null) {
+            sortOrder = savedInstanceState.getInt("sortOrder");
+        }
+
         setHasOptionsMenu(true);
+
     }
 
     @Nullable
@@ -115,10 +121,6 @@ public class MovieGridFragment extends Fragment {
 
         ButterKnife.bind(this,view);
 
-        if( getArguments() != null){
-            showFirst = getArguments().getBoolean("selectFirst");
-        }
-
         return view;
     }
 
@@ -126,13 +128,15 @@ public class MovieGridFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        Uri popularMoviesNetworkUri = MovieDbUtil.getNetworkUri(MovieDbUtil.POPULAR_MOVIES);
+        sort();
+    }
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, popularMoviesNetworkUri.toString(), null, jsonResponseListener ,jsonErrorListener );
 
-        NetworkRequest.getInstance(getActivity()).addToRequestQueue(jsObjRequest);
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt("sortOrder", sortOrder);
 
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -281,12 +285,6 @@ public class MovieGridFragment extends Fragment {
                 jsonErrorListener.onErrorResponse(new VolleyError());
             }
 
-        }
-    }
-
-    public void setSelected( MovieItem movieItem ){
-        if( mMovieAdapter != null ){
-            mMovieAdapter.selected = movieItem.getId() ;
         }
     }
 }
