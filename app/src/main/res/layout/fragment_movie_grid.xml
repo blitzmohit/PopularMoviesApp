@@ -10,6 +10,14 @@
         android:layout_weight="1"
         android:id="@+id/main_progress_bar"/>
 
+    <TextView
+        android:id="@+id/main_no_favorites"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="No favorites were found. Please change your sort order from the dropdown menu."
+        android:visibility="gone"/>
+
 
 <GridView
     xmlns:android="http://schemas.android.com/apk/res/android"

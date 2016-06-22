@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -50,6 +51,9 @@ public class MovieGridFragment extends Fragment {
     @BindView(R.id.main_progress_bar)
     ProgressBar progressBar;
 
+    @BindView(R.id.main_no_favorites)
+    TextView noFavoritesTextView;
+
     private MovieAdapter mMovieAdapter;
 
     @BindBool(R.bool.has_two_panes)
@@ -65,7 +69,15 @@ public class MovieGridFragment extends Fragment {
 
             progressBar.setVisibility( View.GONE );
 
-            Toast.makeText(getContext(), "Could not fetch data from the API", Toast.LENGTH_SHORT).show();
+            if( sortOrder == MovieDbUtil.FAVORITE_SORT ){
+//                Toast.makeText(getContext(), "No favorites were found, please add some movies to your favorites first.", Toast.LENGTH_SHORT).show();
+
+                noFavoritesTextView.setVisibility(View.VISIBLE);
+            }else{
+                Toast.makeText(getContext(), "Could not fetch data from the API", Toast.LENGTH_SHORT).show();
+            }
+
+
         }
     };
     private Response.Listener jsonResponseListener = new Response.Listener<JSONObject>() {
@@ -98,6 +110,8 @@ public class MovieGridFragment extends Fragment {
                 gridView.setVisibility( View.VISIBLE );
 
                 progressBar.setVisibility( View.GONE );
+
+                noFavoritesTextView.setVisibility(View.GONE);
             }
         }
     };
@@ -156,7 +170,7 @@ public class MovieGridFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch( item.getItemId() ){
             case R.id.menuSortPopularity:
-                Toast.makeText(getContext(), "SORT BY NEWEST", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "SORT BY NEWEST", Toast.LENGTH_SHORT).show();
 
                 if( sortOrder != MovieDbUtil.POPULARITY_SORT ){
                     sortOrder = MovieDbUtil.POPULARITY_SORT;
@@ -166,7 +180,7 @@ public class MovieGridFragment extends Fragment {
 
                 return true;
             case R.id.menuSortRating:
-                Toast.makeText(getContext(), "SORT BY RATING", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "SORT BY RATING", Toast.LENGTH_SHORT).show();
 
                 if( sortOrder != MovieDbUtil.RATING_SORT ){
                     sortOrder = MovieDbUtil.RATING_SORT;
@@ -176,7 +190,7 @@ public class MovieGridFragment extends Fragment {
                 return true;
 
             case R.id.menuSortFavorites:
-                Toast.makeText(getContext(), "SORT BY FAVORITES", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "SORT BY FAVORITES", Toast.LENGTH_SHORT).show();
 
                 if( sortOrder != MovieDbUtil.FAVORITE_SORT ){
                     sortOrder = MovieDbUtil.FAVORITE_SORT;
