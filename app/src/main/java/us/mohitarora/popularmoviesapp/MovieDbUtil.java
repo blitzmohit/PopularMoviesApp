@@ -7,7 +7,11 @@ import android.net.Uri;
  *
  */
 
-class MovieDbUtil {
+final class MovieDbUtil {
+
+    private MovieDbUtil(){
+        throw new AssertionError();
+    }
 
     static final String RELEASE_DATE = "release_date";
 
