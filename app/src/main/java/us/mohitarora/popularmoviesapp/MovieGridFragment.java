@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -46,7 +48,7 @@ public class MovieGridFragment extends Fragment {
     private static String TAG = MovieGridFragment.class.getSimpleName();
 
     @BindView(R.id.movie_grid)
-    GridView gridView;
+    RecyclerView gridView;
 
     @BindView(R.id.main_progress_bar)
     ProgressBar progressBar;
@@ -54,7 +56,7 @@ public class MovieGridFragment extends Fragment {
     @BindView(R.id.main_no_favorites)
     TextView noFavoritesTextView;
 
-    private MovieAdapter mMovieAdapter;
+    private MovieRecyclerAdapter mMovieAdapter;
 
     @BindBool(R.bool.has_two_panes)
     boolean showFirst;
@@ -88,7 +90,7 @@ public class MovieGridFragment extends Fragment {
             ArrayList<MovieItem> movieList = MovieItem.parseMovieItems(response);
 
             if (mMovieAdapter == null){
-                mMovieAdapter = new MovieAdapter( getActivity(), movieList);
+                mMovieAdapter = new MovieRecyclerAdapter( getActivity(), movieList);
             }else{
                 mMovieAdapter.clear();
 
@@ -97,6 +99,8 @@ public class MovieGridFragment extends Fragment {
 
             if ( gridView != null && movieList != null ) {
                 Log.d(TAG, "Movie list size is "+ movieList.size());
+
+                gridView.setLayoutManager( new GridLayoutManager(getActivity(),4) );
 
                 gridView.setAdapter( mMovieAdapter );
 

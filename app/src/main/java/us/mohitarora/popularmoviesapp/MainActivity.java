@@ -11,7 +11,7 @@ import org.parceler.Parcels;
 import butterknife.BindBool;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements MovieAdapter.OnMovieSelectedListener {
+public class MainActivity extends AppCompatActivity implements MovieRecyclerAdapter.OnMovieSelectedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 

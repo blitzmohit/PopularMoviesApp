@@ -55,10 +55,10 @@ final class MovieDbUtil {
                 .appendPath("movie");
 
         for( String request : requestType ){
+            builder.appendQueryParameter("api_key",APIKEY.API_KEY);
+
             builder.appendPath(request);
         }
-        builder.appendQueryParameter("api_key",APIKEY.API_KEY);
-
         return builder.build();
     }
 }
