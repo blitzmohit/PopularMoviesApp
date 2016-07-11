@@ -117,9 +117,9 @@ public class DetailsViewFragment extends Fragment {
 
             rating.setText(movie.getVoteAverageByTen());
 
-            Uri trailersNetworkUri = MovieDbUtil.getNetworkUri(movie.getId(), MovieDbUtil.VIDEOS);
+            Uri trailersNetworkUri = MovieMiscUtil.getNetworkUri(movie.getId(), MovieMiscUtil.VIDEOS);
 
-            Uri reviewsNetworkUri =  MovieDbUtil.getNetworkUri(movie.getId(), MovieDbUtil.REVIEWS);
+            Uri reviewsNetworkUri =  MovieMiscUtil.getNetworkUri(movie.getId(), MovieMiscUtil.REVIEWS);
 
             Response.Listener<JSONObject> jsonTrailerResponseListener = new Response.Listener<JSONObject>() {
                 @Override
@@ -231,17 +231,17 @@ public class DetailsViewFragment extends Fragment {
 
             JSONObject storageObject = new JSONObject();
             try {
-                storageObject.put(MovieDbUtil.TITLE, movieItem.getTitle());
+                storageObject.put(MovieMiscUtil.TITLE, movieItem.getTitle());
 
-                storageObject.put(MovieDbUtil.OVERVIEW, movieItem.getOverview());
+                storageObject.put(MovieMiscUtil.OVERVIEW, movieItem.getOverview());
 
-                storageObject.put(MovieDbUtil.ID, movieItem.getId());
+                storageObject.put(MovieMiscUtil.ID, movieItem.getId());
 
-                storageObject.put(MovieDbUtil.RELEASE_DATE, movieItem.getDate());
+                storageObject.put(MovieMiscUtil.RELEASE_DATE, movieItem.getDate());
 
-                storageObject.put(MovieDbUtil.POSTER_PATH, movieItem.getPosterPath());
+                storageObject.put(MovieMiscUtil.POSTER_PATH, movieItem.getPosterPath());
 
-                storageObject.put(MovieDbUtil.VOTE_AVERAGE, movieItem.getVoteAverage());
+                storageObject.put(MovieMiscUtil.VOTE_AVERAGE, movieItem.getVoteAverage());
 
                 message = storageObject.toString();
 

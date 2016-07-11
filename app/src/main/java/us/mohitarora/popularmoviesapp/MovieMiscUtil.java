@@ -7,9 +7,9 @@ import android.net.Uri;
  *
  */
 
-final class MovieDbUtil {
+final class MovieMiscUtil {
 
-    private MovieDbUtil(){
+    private MovieMiscUtil(){
         throw new AssertionError();
     }
 

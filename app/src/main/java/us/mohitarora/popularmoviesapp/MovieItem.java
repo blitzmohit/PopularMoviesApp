@@ -37,17 +37,17 @@ public class MovieItem {
 
                 MovieItem movieItem = new MovieItem();
 
-                movieItem.title = jsonMovieItem.getString(MovieDbUtil.TITLE);
+                movieItem.title = jsonMovieItem.getString(MovieMiscUtil.TITLE);
 
-                movieItem.id = jsonMovieItem.getString(MovieDbUtil.ID);
+                movieItem.id = jsonMovieItem.getString(MovieMiscUtil.ID);
 
-                movieItem.voteAverage = jsonMovieItem.getDouble(MovieDbUtil.VOTE_AVERAGE);
+                movieItem.voteAverage = jsonMovieItem.getDouble(MovieMiscUtil.VOTE_AVERAGE);
 
-                movieItem.overview = jsonMovieItem.getString(MovieDbUtil.OVERVIEW);
+                movieItem.overview = jsonMovieItem.getString(MovieMiscUtil.OVERVIEW);
 
-                movieItem.posterPath = jsonMovieItem.getString(MovieDbUtil.POSTER_PATH);
+                movieItem.posterPath = jsonMovieItem.getString(MovieMiscUtil.POSTER_PATH);
 
-                movieItem.releaseDate = jsonMovieItem.getString(MovieDbUtil.RELEASE_DATE);
+                movieItem.releaseDate = jsonMovieItem.getString(MovieMiscUtil.RELEASE_DATE);
 
                 movieItems.add(movieItem);
             }
@@ -72,11 +72,11 @@ public class MovieItem {
     }
 
     public String getPosterUri() {
-        return MovieDbUtil.BASE_IMAGE_URI + "w185" + posterPath;
+        return MovieMiscUtil.BASE_IMAGE_URI + "w185" + posterPath;
     }
 
     public String getPosterUri(String width) {
-        return MovieDbUtil.BASE_IMAGE_URI + width + posterPath;
+        return MovieMiscUtil.BASE_IMAGE_URI + width + posterPath;
     }
 
     public String getVoteAverage() {
